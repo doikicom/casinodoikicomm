@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Казино Мини-апп</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0; padding: 20px;
+      display: flex; flex-direction: column; align-items: center;
+      height: 100vh;
+      justify-content: center;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    #openCaseBtn {
+      background: #ffbb00;
+      border: none;
+      border-radius: 10px;
+      padding: 15px 30px;
+      font-size: 1.25rem;
+      color: #333;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      box-shadow: 0 4px 8px rgba(255, 187, 0, 0.5);
+    }
+    #openCaseBtn:hover {
+      background: #ffaa00;
+    }
+    #result {
+      margin-top: 2rem;
+      font-size: 1.75rem;
+      min-height: 3rem;
+      font-weight: 700;
+      text-shadow: 0 0 10px #ffcc00;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎰 Открой кейс!</h1>
+  <button id="openCaseBtn">Открыть кейс</button>
+  <div id="result"></div>
+
+  <script>
+    // Telegram WebApp API
+    const tg = window.Telegram.WebApp;
+
+    // Подключаемся к Telegram UI 
+    (скрываем меню и растягиваем окно)
+    tg.expand();
+
+    const prizes = [
+      { chance: 0.05, text: ' супер приз!' },
+      { chance: 0.25, text: ' редкий подарок!' },
+      { chance: 0.7, text: ' ничего :(' },
+    ];
+
+    function getPrize() {
+      const roll = Math.random();
+      let sum = 0;
+      for (const prize of prizes) {
+        sum += prize.chance;
+        if (roll <= sum) {
+          return prize.text;
+        }
+      }
+      return ' ничего :('; // на всякий случай
+    }
+
+    document.getElementById('openCaseBtn').onclick = () => {
+      const prize = getPrize();
+      const resultDiv = document.getElementById('result');
+      resultDiv.textContent = prize;
+
+      // Отправляем данные назад в бота
+      tg.sendData(prize);
+    };
+  </script>
+</body>
+</html>
