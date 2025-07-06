@@ -177,10 +177,9 @@
   <div id="result"></div>
 
   <script>
-    // Telegram WebApp API
+   
     const tg = window.Telegram.WebApp;
 
-    // Подключаемся к Telegram UI 
     (скрываем меню и растягиваем окно)
     tg.expand();
 
@@ -199,7 +198,7 @@
           return prize.text;
         }
       }
-      return ' ничего :('; // на всякий случай
+      return ' ничего :('; 
     }
 
     document.getElementById('openCaseBtn').onclick = () => {
@@ -207,7 +206,6 @@
       const resultDiv = document.getElementById('result');
       resultDiv.textContent = prize;
 
-      // Отправляем данные назад в бота
       tg.sendData(prize);
     };
   </script>
@@ -221,7 +219,7 @@
 <body>
   <h1>Добро пожаловать в казино!</h1>
   
-  <!-- Кнопки для кейсов -->
+  
   <div id="cases">
     <button onclick="openCase('gold')">темный кейс — 50⭐</button>
     <button onclick="openCase('silver')">игровой кейс — 150⭐</button>
@@ -239,27 +237,38 @@
 
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script>
-    // Инициализируем Telegram WebApp
+   
     const tg = window.Telegram.WebApp;
     tg.expand();
 
     function openCase(caseId) {
-      // Запуск анимации рулетки
+      
       startRouletteAnimation();
     }
 
     function startRouletteAnimation() {
       const strip = document.getElementById('strip');
-      strip.style.transform = 'translateX(-500px)'; // Эмулируем движение рулетки
+      strip.style.transform = 'translateX(-500px)'; 
 
-      // Когда анимация закончится, отправляем данные в Telegram
+      
       strip.ontransitionend = () => {
-        tg.sendData("вы получили .....");  // Отправляем данные в бот
+        tg.sendData("вы получили .....");
       }
     }
   </script>
 </body>
 </html>
+<script>
+    function openCase(caseId) {
+        
+        document.getElementById(caseId + '-modal').style.display = "block";  
+    }
+
+    function closeModal(caseId) {
+        
+        document.getElementById(caseId + '-modal').style.display = "none";  
+    }
+</script>
 
 </body>
 </html>
