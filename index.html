@@ -102,6 +102,17 @@
       font-weight: 700;
       text-shadow: 0 0 10px #ffcc00;
     }
+
+    #strip {
+      display: flex;
+      animation: roulette 3s ease-in-out infinite;
+    }
+
+    @keyframes roulette {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
   </style>
 </head>
 <body>
@@ -196,29 +207,25 @@
 
     // Открытие кейса с рулеткой
     function openCase(caseId) {
+      console.log("Кейс открыт:", caseId);  // Проверим, что кнопка сработала
       startRouletteAnimation();  // Запуск анимации рулетки
     }
 
     // Функция анимации рулетки
     function startRouletteAnimation() {
       const strip = document.getElementById('strip');
+      console.log("Запуск анимации");  // Проверка, что анимация запускается
       strip.style.transform = 'translateX(-500px)';  // Анимация прокрутки
 
+      // Когда анимация закончится
       strip.ontransitionend = () => {
-        const prize = getPrize();  // Получаем приз
-        const resultDiv = document.getElementById('result');
-        resultDiv.textContent = prize;
-
+        const prize = getPrize();
+        document.getElementById('result').textContent = prize;
         tg.sendData(prize);  // Отправляем результат в Telegram
       }
     }
 
-    // Открытие модального окна кейса
-    function openCaseModal(caseId) {
-      document.getElementById(caseId + '-modal').style.display = "block";
-    }
-
-    // Закрытие модального окна кейса
+    // Закрытие модальных окон
     function closeModal(caseId) {
       document.getElementById(caseId + '-modal').style.display = "none";
     }
